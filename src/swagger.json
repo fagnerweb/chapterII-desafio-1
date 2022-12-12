@@ -1,246 +1,263 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API para desafio do curso Ignite da Rocketseat",
-        "description": "Essa API é para o cadastro e listagem de usuários, foi proposta no [desafio anterior](https://github.com/fagnerweb/chapterII-desafio-1) e neste o objetivo é documentar usando o Swagger.",
-        "contact": {
-            "email": "fagnermar.silva@gmail.com"
-        },
-        "version": "1.0.0"
+      "title": "API para desafio do curso Ignite da Rocketseat",
+      "description": "Essa API é para o cadastro e listagem de usuários, foi proposta no [desafio anterior](https://github.com/fagnerweb/chapterII-desafio-1) e neste o objetivo é documentar usando o Swagger.",
+      "contact": {
+        "email": "fagnermar.silva@gmail.com"
+      },
+      "version": "1.0.0"
     },
     "servers": [
-        {
-            "url": "http://localhost:3333",
-            "description": "API de test"
-        }
+      {
+        "url": "http://localhost:3333",
+        "description": "API de test"
+      }
     ],
     "paths": {
-        "/users": {
-            "post": {
-                "summary": "Cadastro de usuário",
-                "description": "Essa rota será responsável por fazer o cadastro de um usuário.",
-                "tags": [
-                    "Users"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/UserCreate"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/UserFind"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+      "/users": {
+        "post": {
+          "summary": "Cadastro de usuário",
+          "description": "Essa rota será responsável por fazer o cadastro de um usuário.",
+          "tags": [
+            "Users"
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreate"
                 }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "HTTP 201",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/UserFind"
+                  }
+                }
+              }
             },
-            "get": {
-                "summary": "Lista todos os usuários",
-                "description": "Essa rota recebe pelo header da requisição o `user_id` do usuário que quer fazer a busca e caso ele seja um admin devolve um array de objetos",
-                "tags": [
-                    "Users"
-                ],
-                "parameters": [
-                    {
-                        "name": "user_id",
-                        "in": "header",
-                        "description": "Id do usuário passado pelo header da requisição",
-                        "require": true
+            "400": {
+              "description": "HTTP 400",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Retorna um array de objetos com os usuários",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/UserFind"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Retorna erro caso o usuário que fez a busca não seja `admin`, só usuários admin podem listar outros usuários. E retorna erro caso o usuário não exista!",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                  }
                 }
+              }
             }
+          }
         },
-        "/users/{user_id}": {
-            "get": {
-                "summary": "Busca usuário individual por meio do user_id",
-                "description": "Recebe o `user_id` pela rota e faz a busca do usuário em questão",
-                "tags": [
-                    "Users"
-                ],
-                "parameters": [
-                    {
-                        "name": "user_id",
-                        "in": "path",
-                        "description": "Id do usuário",
-                        "require": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Retorna um objeto com os dados do usuário",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/UserFind"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Erro caso o usuário não exista",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": "string"
-                                    }
-                                },
-                                "examples": {
-                                    "error": {
-                                        "value": {
-                                            "error": "User not exists"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        "get": {
+          "summary": "Lista todos os usuários",
+          "description": "Essa rota recebe pelo header da requisição o `user_id` do usuário que quer fazer a busca e caso ele seja um admin devolve um array de objetos",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "user_id",
+              "in": "header",
+              "description": "Id do usuário passado pelo header da requisição",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
             }
-        },
-        "/users/{user_id}/admin": {
-            "patch": {
-                "summary": "Torna um usuário comum em administrador",
-                "description": "Todos os usuários por padrão não são admin, para torna-los admin envie pela rota o `user_id`",
-                "tags": ["Users"],
-                "parameters": [
-                    {
-                        "name": "user_id",
-                        "in": "path",
-                        "description": "Id do usuário",
-                        "require": true
+          ],
+          "responses": {
+            "200": {
+              "description": "Retorna um array de objetos com os usuários",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/UserFind"
                     }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Usuário foi alterado para admin",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "$ref": "#/components/schemas/UserFind"
-                                }                                
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Usuário não existe",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "error": "string"
-                                    }
-                                },
-                                "examples": {
-                                    "error": {
-                                        "value": {
-                                            "error": "User not found"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                  }
                 }
+              }
+            },
+            "400": {
+              "description": "Retorna erro caso o usuário que fez a busca não seja `admin`, só usuários admin podem listar outros usuários. E retorna erro caso o usuário não exista!",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
             }
+          }
         }
+      },
+      "/users/{user_id}": {
+        "get": {
+          "summary": "Busca usuário individual por meio do user_id",
+          "description": "Recebe o `user_id` pela rota e faz a busca do usuário em questão",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "user_id",
+              "in": "path",
+              "description": "Id do usuário",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Retorna um objeto com os dados do usuário",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/UserFind"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Erro caso o usuário não exista",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "error": "User not exists"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users/{user_id}/admin": {
+        "patch": {
+          "summary": "Torna um usuário comum em administrador",
+          "description": "Todos os usuários por padrão não são admin, para torna-los admin envie pela rota o `user_id`",
+          "tags": [
+            "Users"
+          ],
+          "parameters": [
+            {
+              "name": "user_id",
+              "in": "path",
+              "description": "Id do usuário",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuário foi alterado para admin",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/UserFind"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Usuário não existe",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "error": "User not found"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "components": {
-        "schemas": {
-            "UserCreate": {
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    }
-                }
+      "schemas": {
+        "UserCreate": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
             },
-            "UserFind": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "email": {
-                        "type": "string"
-                    },
-                    "admin": {
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "type": "string"
-                    },
-                    "updated_at": {
-                        "type": "string"
-                    }
-                }
+            "email": {
+              "type": "string"
             }
+          }
+        },
+        "UserFind": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "admin": {
+              "type": "string"
+            },
+            "created_at": {
+              "type": "string"
+            },
+            "updated_at": {
+              "type": "string"
+            }
+          }
         }
+      }
     }
-}
+  }
